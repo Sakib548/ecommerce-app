@@ -26,7 +26,7 @@ const Product = () => {
   useEffect(() => {
     fetchProductData();
   }, [productId]);
-  console.log(productData);
+  // console.log(productData);
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       {/* -----------------Product Data------------------ */}
@@ -93,7 +93,7 @@ const Product = () => {
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original product.</p>
-            <p>Cash on dlivery is available on this product</p>
+            <p>Cash on delivery is available on this product</p>
             <p>Easy return and exchange policy within 7 days</p>
           </div>
         </div>
