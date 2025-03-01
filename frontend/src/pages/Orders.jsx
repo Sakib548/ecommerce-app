@@ -31,6 +31,9 @@ const Order = () => {
                 <p className="mt-2">
                   Date:<span className="text-gray-400">25 January 2025</span>
                 </p>
+                <p className="mt-2">
+                  Payment:<span className="text-gray-400"> COD</span>
+                </p>
               </div>
             </div>
 
