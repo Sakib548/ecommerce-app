@@ -1,3 +1,4 @@
-export const Add = () => {
+const Add = () => {
   return <div>Add</div>;
 };
+export default Add;
