@@ -102,6 +102,17 @@ const Add = () => {
           </div>
         </div>
       </div>
+
+      <div className="flex gap-2 mt-2">
+        <input type="checkbox" id="bestseller" />
+        <label className="cursor-pointer" htmlFor="bestseller">
+          Add to bestseller
+        </label>
+      </div>
+
+      <button type="submit" className="w-28 py-3 mt-4 bg-black text-white">
+        Add
+      </button>
     </form>
   );
 };
