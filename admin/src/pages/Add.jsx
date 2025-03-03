@@ -1,7 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { backendUrl } from "../App";
 import { assets } from "../assets/assets";
 
-const Add = () => {
+const Add = ({ token }) => {
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
   const [image3, setImage3] = useState(false);
@@ -16,8 +19,56 @@ const Add = () => {
   const [bestseller, setBestseller] = useState(false);
   const [sizes, setSizes] = useState([]);
 
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+
+      formData.append("name", name);
+      formData.append("description", description);
+
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("subCategory", subCategory);
+      formData.append("bestseller", bestseller);
+      formData.append("sizes", JSON.stringify(sizes));
+
+      image1 && formData.append("image1", image1);
+      image2 && formData.append("image2", image2);
+      image3 && formData.append("image3", image3);
+      image4 && formData.append("image4", image4);
+
+      console.log("Token", token);
+
+      const response = await axios.post(
+        backendUrl + "/api/product/add",
+        formData,
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setName("");
+        setImage1(false);
+        setImage2(false);
+        setImage3(false);
+        setImage4(false);
+        setPrice("");
+      } else {
+        toast.error(response.data.message);
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   return (
-    <form className="flex flex-col w-full items-start gap-3">
+    <form
+      className="flex flex-col w-full items-start gap-3"
+      onSubmit={onSubmitHandler}
+    >
       <div>
         <p className="mb-2">Upload Image</p>
 
@@ -155,7 +206,13 @@ const Add = () => {
               )
             }
           >
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">S</p>
+            <p
+              className={`${
+                sizes.includes("S") ? "bg-pink-100" : "bg-slate-200"
+              } px-3 py-1 cursor-pointer`}
+            >
+              S
+            </p>
           </div>
 
           <div
@@ -167,7 +224,13 @@ const Add = () => {
               )
             }
           >
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">M</p>
+            <p
+              className={`${
+                sizes.includes("M") ? "bg-pink-100" : "bg-slate-200"
+              } px-3 py-1 cursor-pointer`}
+            >
+              M
+            </p>
           </div>
 
           <div
@@ -179,7 +242,13 @@ const Add = () => {
               )
             }
           >
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">L</p>
+            <p
+              className={`${
+                sizes.includes("L") ? "bg-pink-100" : "bg-slate-200"
+              } px-3 py-1 cursor-pointer`}
+            >
+              L
+            </p>
           </div>
 
           <div
@@ -191,7 +260,13 @@ const Add = () => {
               )
             }
           >
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">XL</p>
+            <p
+              className={`${
+                sizes.includes("XL") ? "bg-pink-100" : "bg-slate-200"
+              } px-3 py-1 cursor-pointer`}
+            >
+              XL
+            </p>
           </div>
 
           <div
@@ -203,13 +278,24 @@ const Add = () => {
               )
             }
           >
-            <p className="bg-slate-200 px-3 py-1 cursor-pointer">XXL</p>
+            <p
+              className={`${
+                sizes.includes("XXL") ? "bg-pink-100" : "bg-slate-200"
+              } px-3 py-1 cursor-pointer`}
+            >
+              XXL
+            </p>
           </div>
         </div>
       </div>
 
       <div className="flex gap-2 mt-2">
-        <input type="checkbox" id="bestseller" />
+        <input
+          type="checkbox"
+          id="bestseller"
+          onChange={() => setBestseller((prev) => !prev)}
+          checked={bestseller}
+        />
         <label className="cursor-pointer" htmlFor="bestseller">
           Add to bestseller
         </label>
