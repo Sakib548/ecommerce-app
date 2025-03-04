@@ -24,7 +24,7 @@ const List = ({ token }) => {
 
   useEffect(() => {
     fetchList();
-  }, []);
+  }, [fetchList]);
 
   const removeProduct = async (id) => {
     try {
@@ -41,7 +41,6 @@ const List = ({ token }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
     }
   };
   return (
