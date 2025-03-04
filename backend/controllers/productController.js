@@ -19,7 +19,9 @@ const addProduct = async (req, res) => {
     const image3 = req.files.image3 && req.files.image3[0];
     const image4 = req.files.image4 && req.files.image4[0];
 
-    const images = [image1, image2, image3, image4].filter((item) => item !== undefined);
+    const images = [image1, image2, image3, image4].filter(
+      (item) => item !== undefined
+    );
 
     let imagesUrl = await Promise.all(
       images.map(async (item) => {
@@ -68,7 +70,9 @@ const listProducts = async (req, res) => {
 //function for removing product
 const removeProduct = async (req, res) => {
   try {
+    console.log(req.body.id);
     await Product.findByIdAndDelete(req.body.id);
+
     res.json({ success: true, message: "Product Deleted" });
   } catch (err) {
     res.json({ success: false, message: err.message });

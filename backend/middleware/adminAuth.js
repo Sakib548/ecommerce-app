@@ -2,6 +2,7 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 
 const adminAuth = async (req, res, next) => {
+  // console.log("From Auth", req.headers.token);
   try {
     const { token } = req.headers;
     if (!token) {
