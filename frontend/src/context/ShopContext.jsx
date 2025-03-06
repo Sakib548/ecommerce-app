@@ -17,7 +17,7 @@ const ShopContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
-    console.log(itemId);
+    //console.log(itemId);
 
     if (!size) {
       toast.error("Select Product Size");
@@ -116,7 +116,7 @@ const ShopContextProvider = ({ children }) => {
   };
 
   const getUserCart = async (token) => {
-    console.log("FDFFD", token);
+    // console.log("FDFFD", token);
 
     try {
       const response = await axios.post(
@@ -124,10 +124,10 @@ const ShopContextProvider = ({ children }) => {
         {},
         { headers: { token } }
       );
-      console.log("HELLo", response);
+      // console.log("HELLo", response);
       if (response.data.success) {
         setCartItems(response.data.cartData);
-        console.log(cartItems);
+        // console.log(cartItems);
       }
     } catch (error) {
       console.log(error);
@@ -155,6 +155,7 @@ const ShopContextProvider = ({ children }) => {
     showSearch,
     setShowSearch,
     cartItems,
+    setCartItems,
     addToCart,
     getCartCount,
     updateQuantity,
