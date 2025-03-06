@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import User from "../models/User.js";
 
 // Placing orders using COD Method
 
@@ -17,11 +18,14 @@ const placeOrder = async (req, res) => {
 
     const newOrder = new Order(orderData);
     await newOrder.save();
-    await User.findByIdAndUpdate(userId, { cartData: {} });
+    const result = await User.findByIdAndUpdate(userId, { cartData: {} });
+    console.log(result);
 
     res.json({ success: true, message: "Order Placed" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    console.log(error);
+
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -39,7 +43,16 @@ const allOrders = async (req, res) => {};
 
 // User Order Data fro frontend
 
-const userOrders = async (req, res) => {};
+const userOrders = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const orders = await Order.find({ userId });
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, msg: error.message });
+  }
+};
 
 // update order status from Admin panel
 
