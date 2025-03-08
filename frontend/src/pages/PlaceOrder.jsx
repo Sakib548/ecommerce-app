@@ -72,7 +72,7 @@ const PlaceOrder = () => {
               headers: { token },
             }
           );
-          console.log("Hello", response.data);
+          // console.log("Hello", response.data);
           if (response.data.success) {
             setCartItems({});
             navigate("/orders");
@@ -80,6 +80,24 @@ const PlaceOrder = () => {
             toast.error(response.data.message);
           }
 
+          break;
+
+        case "stripe":
+          const responseStripe = await axios.post(
+            backendUrl + "/api/order/stripe",
+            orderData,
+            {
+              headers: { token },
+            }
+          );
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url);
+            setCartItems({});
+            navigate("/orders");
+          } else {
+            toast.error(response.data.message);
+          }
           break;
 
         default:
