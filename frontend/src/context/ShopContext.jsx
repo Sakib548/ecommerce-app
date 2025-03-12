@@ -19,6 +19,11 @@ const ShopContextProvider = ({ children }) => {
   const addToCart = async (itemId, size) => {
     //console.log(itemId);
 
+    if (!token) {
+      toast.error("You need to log in to add items to the cart");
+      return;
+    }
+
     if (!size) {
       toast.error("Select Product Size");
       return;
@@ -38,6 +43,8 @@ const ShopContextProvider = ({ children }) => {
     setCartItems(cartData);
 
     if (token) {
+      console.log();
+
       try {
         await axios.post(
           backendUrl + "/api/cart/add",
